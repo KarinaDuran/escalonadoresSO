@@ -10,24 +10,26 @@ public class SeuSO extends SO {
 	private static List<Integer> processosProntos = new ArrayList<Integer>();
 	private Integer processosExecutando;
 	private List<Integer> processosEsperando = new ArrayList<Integer>();
-	private Integer idAtual;
+	private Integer idAtual = 0; //?
+	private Integer trocasDeContexto = 0;
 	private Operacao[] operacaoAtual;
 
 	@Override
 	// ATENCÃO: cria o processo mas o mesmo 
 	// só estará "pronto" no próximo ciclo
 	protected void criaProcesso(Operacao[] codigo) {
-		for(int i = 0; i< codigo.length; i++){
-
-
-		}
-		
+		PCB novoProcesso = new PCB();
+		novoProcesso.idProcesso = idAtual;
+		idAtual ++;
+		novoProcesso.codigo = codigo;
+		novoProcesso.contadorDePrograma = 0;
 	}
 
 	@Override
 	protected void trocaContexto(PCB pcbAtual, PCB pcbProximo) {
 		idAtual = pcbProximo.idProcesso;
 		operacaoAtual = pcbProximo.codigo;
+		trocasDeContexto ++;
 	}
 
 	@Override
@@ -58,7 +60,7 @@ public class SeuSO extends SO {
 	@Override
 	protected Integer idProcessoNovo() {
 		// TODO Auto-generated method stub
-		return null;
+		return idAtual-1;
 	}
 
 	@Override
@@ -101,12 +103,19 @@ public class SeuSO extends SO {
 
 	@Override
 	protected int trocasContexto() {
-		// TODO Auto-generated method stub
-		return 0;
+		return trocasDeContexto;
 	}
 
 	@Override
 	public void defineEscalonador(Escalonador e) {
-		// TODO Auto-generated method stub
+		if(e == Escalonador.FIRST_COME_FIRST_SERVED){
+
+		}else if(e == Escalonador.SHORTEST_JOB_FIRST ){
+
+		}else if(e == Escalonador.SHORTEST_REMANING_TIME_FIRST){
+
+		}else if(e == Escalonador.ROUND_ROBIN_QUANTUM_5){
+
+		}
 	}
 }
