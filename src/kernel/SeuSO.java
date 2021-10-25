@@ -12,7 +12,9 @@ public class SeuSO extends SO {
 	private List<Integer> processosEsperando = new ArrayList<Integer>();
 	private Integer idAtual = 0; //?
 	private Integer trocasDeContexto = 0;
-	private Operacao[] operacaoAtual;
+	private Escalonador esquemaEscalonador;
+	private PCB processoAtual;
+	private Operacao operacaoAtual;
 
 	@Override
 	// ATENCÃO: cria o processo mas o mesmo 
@@ -20,15 +22,32 @@ public class SeuSO extends SO {
 	protected void criaProcesso(Operacao[] codigo) {
 		PCB novoProcesso = new PCB();
 		novoProcesso.idProcesso = idAtual;
-		idAtual ++;
 		novoProcesso.codigo = codigo;
 		novoProcesso.contadorDePrograma = 0;
+		novoProcesso.ciclosRestantes = totalCiclos(codigo);
+		processosProntos.add(idAtual);
+		
+
+	}
+
+	protected int totalCiclos(Operacao[] codigo){
+		int aux = codigo.length;
+		for (Operacao o : codigo){
+			if (o instanceof OperacaoES){
+				OperacaoES x = (OperacaoES)o;
+				aux--;
+				aux+=x.ciclos;
+			}
+		}
+		return aux;
+
 	}
 
 	@Override
 	protected void trocaContexto(PCB pcbAtual, PCB pcbProximo) {
 		idAtual = pcbProximo.idProcesso;
-		operacaoAtual = pcbProximo.codigo;
+		processoAtual = pcbProximo;
+		
 		trocasDeContexto ++;
 	}
 
@@ -41,7 +60,21 @@ public class SeuSO extends SO {
 
 	@Override
 	protected Operacao proximaOperacaoCPU() {
-		// TODO Auto-generated method stub
+		if(esquemaEscalonador == Escalonador.FIRST_COME_FIRST_SERVED){
+			if(processoAtual.codigo.length > 0){
+				return processoAtual.codigo[processoAtual.contadorDePrograma+1];
+				processoAtual.contadorDePrograma = processoAtual.contadorDePrograma++;
+			}else{
+				processosProntos.add(processoAtual.idProcesso);
+				return processosExecutando.get();
+
+			}
+		}else if( esquemaEscalonador == Escalonador.SHORTEST_JOB_FIRST){
+
+		}
+
+
+		
 		return null;
 	}
 
@@ -108,14 +141,6 @@ public class SeuSO extends SO {
 
 	@Override
 	public void defineEscalonador(Escalonador e) {
-		if(e == Escalonador.FIRST_COME_FIRST_SERVED){
-
-		}else if(e == Escalonador.SHORTEST_JOB_FIRST ){
-
-		}else if(e == Escalonador.SHORTEST_REMANING_TIME_FIRST){
-
-		}else if(e == Escalonador.ROUND_ROBIN_QUANTUM_5){
-
-		}
+		esquemaEscalonador = e;
 	}
 }
