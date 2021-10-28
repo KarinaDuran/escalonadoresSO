@@ -8,7 +8,8 @@ public class PCB {
 	public int[] registradores = new int[5];
 	public int contadorDePrograma;
 	public Operacao[] codigo;
-	public int ciclosRestantes; 
+	public int ciclosRestantes;
+	public int momentoPronto;
 
 	
 	public int compareTo(PCB outro){
