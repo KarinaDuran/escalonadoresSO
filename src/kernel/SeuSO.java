@@ -43,7 +43,7 @@ public class SeuSO extends SO {
 		novoProcesso.idProcesso = idProcessoNovo;
 		novoProcesso.codigo = codigo;
 		novoProcesso.contadorDePrograma = 0;
-        processoNovo = novoProcesso;
+        	processoNovo = novoProcesso;
 		idProcessoNovo ++;
 	}
 
@@ -71,6 +71,24 @@ public class SeuSO extends SO {
 		processos = filaES4.get(0);
 		}
 		return (OperacaoES)(processos.codigo[processos.contadorDePrograma]);
+	
+	}
+	
+	protected void verificaOperacaoESAcabou() {
+		if(filaES0.size()>0){
+		if(filaES0.get(0).codigo[filaES0.get(0).contadorDePrograma].;
+						
+			
+		}
+		if(filaES1.size()>0){
+		
+		}
+		if(filaES2.size()>0){
+		
+		}
+		if(filaES3.size()>0){
+		
+		}
 	
 	}
 
