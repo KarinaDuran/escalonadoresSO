@@ -59,9 +59,9 @@ public class SeuSO extends SO {
 		PCB processos;
 		if(idDispositivo == 0){
 			processos = filaES0.get(0);
-		}else		if(idDispositivo == 1){
+		}else if(idDispositivo == 1){
 			processos = filaES1.get(0);
-		}else		if(idDispositivo == 2){
+		}else	if(idDispositivo == 2){
 			processos = filaES2.get(0);
 		}else if(idDispositivo == 3){
 			processos = filaES3.get(0);
@@ -132,12 +132,8 @@ public class SeuSO extends SO {
 
 	@Override
 	protected void executaCicloKernel() {
+		verificaOperacaoESAcabou();
 		PCB processo = processoAtual;
-		
-		if(filaES0 != null){
-			// pegar os valores que estao na fila e colocar na fila de pronto se tiverem concluido			
-		}
-
 
 		if(processo != null){
 			if(processoAtual.codigo.length == processoAtual.contadorDePrograma){
@@ -155,7 +151,7 @@ public class SeuSO extends SO {
 				adicionaFilaES(aux.idDispositivo, processoAtual);
 				trocaContexto(processoAtual, prontoList.get(0));
 				prontoList.remove(0);			
-			
+				
 			}else {
 				//Vai pra proxima execução
 				operacaoCPU = processoAtual.codigo[processoAtual.contadorDePrograma];
