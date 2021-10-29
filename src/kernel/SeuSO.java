@@ -76,20 +76,55 @@ public class SeuSO extends SO {
 	
 	protected void verificaOperacaoESAcabou() {
 		if(filaES0.size()>0){
-		if(filaES0.get(0).codigo[filaES0.get(0).contadorDePrograma].;
+		if(filaES0.get(0).codigo[filaES0.get(0).contadorDePrograma].ciclos==0){
+		PCB aux = filaES0.get(0);
+			filaES0.remove(0);
+		aux.contadorDePrograma++;
+		prontoList.add(aux);
+		processosProntos.add(aux.id);
+		}
 						
 			
 		}
 		if(filaES1.size()>0){
-		
+			if(filaES1.get(0).codigo[filaES1.get(0).contadorDePrograma].ciclos==0){
+		PCB aux = filaES1.get(0);
+				filaES1.remove(0);
+		aux.contadorDePrograma++;
+		prontoList.add(aux);
+		processosProntos.add(aux.id);
 		}
 		if(filaES2.size()>0){
+			if(filaES2.get(0).codigo[filaES2.get(0).contadorDePrograma].ciclos==0){
+		PCB aux = filaES2.get(0);
+				filaES2.remove(0);
+		aux.contadorDePrograma++;
+		prontoList.add(aux);
+		processosProntos.add(aux.id);
 		
 		}
 		if(filaES3.size()>0){
+		if(filaES3.get(0).codigo[filaES3.get(0).contadorDePrograma].ciclos==0){
+		PCB aux = filaES3.get(0);
+			filaES3.remove(0);
+		aux.contadorDePrograma++;
+		prontoList.add(aux);
+		processosProntos.add(aux.id);
 		
 		}
-	
+			
+		if(filaES4.get(0).codigo[filaES4.get(0).contadorDePrograma].ciclos==0){
+			PCB aux = filaES4.get(0);
+			filaES4.remove(0);
+			aux.contadorDePrograma++;
+			
+			if(aux.codigo[aux.contadorDePrograma] instance of OperacaoES){
+				adicionaFilaES(aux.codigo[aux.contadorDePrograma].idDispositivo, aux);
+			}else{
+				aux.momentoPronto = contadorCiclos;
+				prontoList.add(aux);
+				processosProntos.add(aux.id);
+			}
 	}
 
 	@Override
