@@ -50,9 +50,7 @@ public class SeuSO extends SO {
 
 	@Override
 	protected void trocaContexto(PCB pcbAtual, PCB pcbProximo) {
-	 idProcessoNovo = pcbProximo.idProcesso;
-		processoAtual = pcbProximo;
-		
+	     	processoAtual = pcbProximo;
 		trocasDeContexto ++;
 	}
 
@@ -78,7 +76,7 @@ public class SeuSO extends SO {
 		if(filaES0.size()>0){
 		if(filaES0.get(0).codigo[filaES0.get(0).contadorDePrograma].ciclos==0){
 		PCB aux = filaES0.get(0);
-			filaES0.remove(0);
+		filaES0.remove(0);
 		aux.contadorDePrograma++;
 		prontoList.add(aux);
 		processosProntos.add(aux.id);
@@ -213,6 +211,8 @@ public class SeuSO extends SO {
 
 	@Override
 	protected List<Integer> idProcessosProntos() {
+		
+		
 		return processosProntos;
 	}
 
