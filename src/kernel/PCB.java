@@ -17,7 +17,7 @@ public class PCB implements Comparable<PCB>{
 		//return 1;
 		//else return 0;
 		if(outro.momentoPronto > this.momentoPronto || (outro.momentoPronto == this.momentoPront && outro.idProcesso>this.idProcesso)) return 1
-			else return 0;
+			else return -1;
 	}
 
 }
