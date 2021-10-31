@@ -11,13 +11,13 @@ public class PCB implements Comparable<PCB>{
 	public int Chute = 5;
 	public int momentoPronto;
 
-	
+	@Override
 	public int compareTo(PCB outro){
 		//if(outro.Chute > this.Chute || (outro.Chute == this.Chute && this.idProcesso < outro.idProcesso ))
 		//return 1;
 		//else return 0;
-		if(outro.momentoPronto > this.momentoPronto || (outro.momentoPronto == this.momentoPront && outro.idProcesso>this.idProcesso)) return 1
-			else return -1;
+		if(outro.momentoPronto > this.momentoPronto || (outro.momentoPronto == this.momentoPronto && outro.idProcesso > this.idProcesso)) return -1;
+			else return 1;
 	}
 
 }
