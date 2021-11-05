@@ -81,10 +81,10 @@ public class SeuSO extends SO {
 		}
 	}
 
-	protected void verificaOperacaoESAcabou() {
+	protected void GerenciadorES() {
 		if (operacaoES0 != null && operacaoES0.ciclos == 0) {
 			PCB x = filaES0.get(0);
-			x.contadorDePrograma =x.contadorDePrograma +1;
+			x.contadorDePrograma = x.contadorDePrograma + 1;
 			filaES0.remove(0);
 			int y = processosEsperando.indexOf(x.idProcesso);
 			processosEsperando.remove(y);
@@ -196,28 +196,31 @@ public class SeuSO extends SO {
 		}
 	}
 
-	protected void pegaProxPronto(){
+	protected void pegaProxPronto() {
 		if (!prontoList.isEmpty()) {
 			trocaContexto(processoAtual, prontoList.get(0));
 			operacaoCPU = processoAtual.codigo[processoAtual.contadorDePrograma];
-			processoAtual.contadorDePrograma = processoAtual.contadorDePrograma +1;
+			processoAtual.contadorDePrograma = processoAtual.contadorDePrograma + 1;
 			prontoList.remove(0);
 		} else {
 			processoAtual = null;
+		}
+		trocasDeContexto++;
 	}
-}
+
 	@Override
 	protected void executaCicloKernel() {
 		if (processoNovo != null) {
 			verificaDestino(processoNovo);
 			processoNovo = null;
 		}
-		verificaOperacaoESAcabou();
+		GerenciadorES();
 		Collections.sort(prontoList);
 
-		if(esquemaEscalonador == Escalonador.SHORTEST_JOB_FIRST || esquemaEscalonador == Escalonador.FIRST_COME_FIRST_SERVED){
+		if (esquemaEscalonador == Escalonador.SHORTEST_JOB_FIRST
+				|| esquemaEscalonador == Escalonador.FIRST_COME_FIRST_SERVED) {
 			fifoSjf();
-		}else{
+		} else {
 			RoundRobin();
 
 		}
@@ -230,11 +233,14 @@ public class SeuSO extends SO {
 		}
 
 		if (!prontoList.isEmpty()) {
-			totalTempoEspera+= prontoList.size();
+			totalTempoEspera += prontoList.size();
 		}
 
 		int executando;
-		if(processoAtual!= null) executando = 1; else executando = 0;
+		if (processoAtual != null)
+			executando = 1;
+		else
+			executando = 0;
 
 		totalTempoRetorno += prontoList.size() + processosEsperando.size() + executando;
 
@@ -288,7 +294,7 @@ public class SeuSO extends SO {
 	}
 
 	protected void aa() {
-		
+
 		if (processoAtual != null) {
 			if (processoAtual.codigo.length == processoAtual.contadorDePrograma) {
 				// Termina o processo atual
@@ -331,12 +337,10 @@ public class SeuSO extends SO {
 			}
 		}
 
-	
 	}
-	
-	
-	protected void fifoSjf(){
-				if (processoAtual != null) {
+
+	protected void fifoSjf() {
+		if (processoAtual != null) {
 			if (processoAtual.codigo.length == processoAtual.contadorDePrograma) {
 				// Termina o processo atual
 				processosTerminados.add(processoAtual.idProcesso);
@@ -373,31 +377,29 @@ public class SeuSO extends SO {
 		}
 	}
 
-
-
 	protected void adicionaFilaES(int idDispositivo, PCB processo) {
 		if (idDispositivo == 0) {
 			filaES0.add(processo);
 			if (operacaoES0 == null)
-		operacaoES0 = (OperacaoES) filaES0.get(0).codigo[filaES0.get(0).contadorDePrograma];
+				operacaoES0 = (OperacaoES) filaES0.get(0).codigo[filaES0.get(0).contadorDePrograma];
 		} else if (idDispositivo == 1) {
 			filaES1.add(processo);
-			if (operacaoES1 == null )
-		operacaoES1 = (OperacaoES) filaES1.get(0).codigo[filaES1.get(0).contadorDePrograma];
+			if (operacaoES1 == null)
+				operacaoES1 = (OperacaoES) filaES1.get(0).codigo[filaES1.get(0).contadorDePrograma];
 		} else if (idDispositivo == 2) {
-				filaES2.add(processo);
-				if (operacaoES2 == null)
-		operacaoES2 = (OperacaoES) filaES2.get(0).codigo[filaES2.get(0).contadorDePrograma];
-		
+			filaES2.add(processo);
+			if (operacaoES2 == null)
+				operacaoES2 = (OperacaoES) filaES2.get(0).codigo[filaES2.get(0).contadorDePrograma];
+
 		} else if (idDispositivo == 3) {
 			filaES3.add(processo);
 			if (operacaoES3 == null)
-		operacaoES3 = (OperacaoES) filaES3.get(0).codigo[filaES3.get(0).contadorDePrograma];
+				operacaoES3 = (OperacaoES) filaES3.get(0).codigo[filaES3.get(0).contadorDePrograma];
 
 		} else {
 			filaES4.add(processo);
 			if (operacaoES4 == null)
-			operacaoES4 = (OperacaoES) filaES4.get(0).codigo[filaES4.get(0).contadorDePrograma];	
+				operacaoES4 = (OperacaoES) filaES4.get(0).codigo[filaES4.get(0).contadorDePrograma];
 		}
 
 	}
