@@ -16,11 +16,12 @@ public class PCB implements Comparable<PCB> {
 	public int Chute = 5;
 	public int contadorBurst = 0;
 	public int momentoPronto;
+	public boolean foiExecutado = false;
 	public Escalonador escalonador;
 
 	@Override
 	public int compareTo(PCB outro) {
-		if (escalonador == escalonador.SHORTEST_JOB_FIRST || escalonador == escalonador.SHORTEST_REMANING_TIME_FIRST) {
+		if (escalonador == Escalonador.SHORTEST_JOB_FIRST || escalonador == Escalonador.SHORTEST_REMANING_TIME_FIRST) {
 			if (outro.Chute > this.Chute || (outro.Chute == this.Chute && outro.idProcesso > this.idProcesso))
 				return -1;
 			else
