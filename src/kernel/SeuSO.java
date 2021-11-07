@@ -1,14 +1,8 @@
 package kernel;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Collections;
-import java.util.Comparator;
-
-import javax.swing.plaf.basic.BasicScrollPaneUI.HSBChangeListener;
-
 import kernel.PCB.Estado;
 import operacoes.Operacao;
 import operacoes.OperacaoES;
@@ -281,7 +275,7 @@ public class SeuSO extends SO {
 					verificaDestino(processoAtual);
 					Collections.sort(prontoList);
 					pegaProxPronto();
-					processoAtual.foiExecutado = true;
+					if(processoAtual != null)processoAtual.foiExecutado = true;
 					trocasDeContexto++;
 				} else {
 					if (processoAtual.codigo[processoAtual.contadorDePrograma] instanceof OperacaoES) {
@@ -336,7 +330,7 @@ public class SeuSO extends SO {
 
 			} else {
 				if (processoAtual.codigo[processoAtual.contadorDePrograma] instanceof OperacaoES) {
-					processoAtual.Chute = (processoAtual.Chute + processoAtual.contadorBurst) / 2;
+					processoAtual.Chute = Math.round(((float)processoAtual.Chute + (float)processoAtual.contadorBurst) / 2);
 					processoAtual.contadorBurst = 0;
 					// Troca de contexto pra abrir espaco para operacao ES
 					OperacaoES aux = (OperacaoES) processoAtual.codigo[processoAtual.contadorDePrograma];
@@ -354,6 +348,7 @@ public class SeuSO extends SO {
 					processoAtual.estado = Estado.PRONTO;
 					prontoList.add(processoAtual);
 					processoAtual = prontoList.get(0);
+					processoAtual.foiExecutado = true;
 					prontoList.remove(0);
 					Collections.sort(prontoList);
 					trocasDeContexto++;
@@ -394,7 +389,7 @@ public class SeuSO extends SO {
 			} else {
 				if (processoAtual.codigo[processoAtual.contadorDePrograma] instanceof OperacaoES) {
 					// Ajusta o proximo chute
-					processoAtual.Chute = (processoAtual.Chute + processoAtual.contadorBurst) / 2;
+					processoAtual.Chute = Math.round(((float)processoAtual.Chute + (float)processoAtual.contadorBurst) / 2);
 					processoAtual.contadorBurst = 0;
 					// Coloca na fila de ES
 					OperacaoES aux = (OperacaoES) processoAtual.codigo[processoAtual.contadorDePrograma];
@@ -499,17 +494,17 @@ public class SeuSO extends SO {
 
 	@Override
 	protected int tempoEsperaMedio() {
-		return Math.round(totalTempoEspera / processosTerminados.size());
+		return Math.round((float)totalTempoEspera / (float)processosTerminados.size());
 	}
 
 	@Override
 	protected int tempoRespostaMedio() {
-		return Math.round(totalTempoResposta / processosTerminados.size());
+		return Math.round((float)totalTempoResposta /(float) processosTerminados.size());
 	}
 
 	@Override
 	protected int tempoRetornoMedio() {
-		return Math.round(totalTempoRetorno / processosTerminados.size());
+		return Math.round((float)totalTempoRetorno /(float) processosTerminados.size());
 	}
 
 	@Override
